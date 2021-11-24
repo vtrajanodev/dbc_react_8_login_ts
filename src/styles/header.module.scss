@@ -1,0 +1,16 @@
+
+.headerFlex {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 1rem auto;
+
+  li {
+    display: inline;
+    margin-right: 2rem;
+
+    & + li {
+      margin-right: 0;
+    }
+  }
+}
