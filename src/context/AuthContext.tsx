@@ -1,5 +1,4 @@
 import { createContext, ReactNode, useEffect, useState } from 'react'
-import axios from 'axios'
 import api from '../services/api'
 
 interface LoginDTO {
@@ -22,13 +21,12 @@ export const AuthContextProvider = ({ children }: AuthContextProviderType) => {
   
   const [userAuthenticated, setUserAuthenticated] = useState(false)
 
-
   useEffect(() => {
     console.log('teste')
   }, [])
 
   const handleLogin = async (user: LoginDTO) => {
-    const { data } = await api.get('/auth', user)
+    const { data } = await api.post('/auth', user)
     setUserAuthenticated(true)
     console.log(data)
   }
