@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useEffect, useState } from 'react'
 import axios from 'axios'
+import api from '../services/api'
 
 interface LoginDTO {
   usuario: string;
@@ -21,12 +22,13 @@ export const AuthContextProvider = ({ children }: AuthContextProviderType) => {
   
   const [userAuthenticated, setUserAuthenticated] = useState(false)
 
+
   useEffect(() => {
     console.log('teste')
   }, [])
 
   const handleLogin = async (user: LoginDTO) => {
-    const { data } = await axios.post('https://my-application-teste.herokuapp.com/auth', user)
+    const { data } = await api.get('/auth', user)
     setUserAuthenticated(true)
     console.log(data)
   }
