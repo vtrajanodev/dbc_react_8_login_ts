@@ -26,9 +26,14 @@ export const AuthContextProvider = ({ children }: AuthContextProviderType) => {
   }, [])
 
   const handleLogin = async (user: LoginDTO) => {
-    const { data } = await api.post('/auth', user)
-    setUserAuthenticated(true)
-    console.log(data)
+    try {
+      const { data } = await api.post('/auth', user)
+      setUserAuthenticated(true)
+      console.log(data)
+    } catch (err) {
+      alert(err)
+    }
+    
   }
   return (
     <AuthContext.Provider value={{ userAuthenticated, handleLogin }}>
