@@ -2,16 +2,30 @@ import { Formik, Field, Form, FormikHelpers } from 'formik';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import styles from '../styles/login.module.scss'
+import { LoginDTO } from '../models/LoginDTO';
+import api from '../services/api';
+import { useNavigate } from 'react-router';
 
 export const Login = () => {
 
-  const { userAuthenticated, handleLogin } = useContext(AuthContext)
+  const { setUserAuthenticated } = useContext(AuthContext)
+  const navigate = useNavigate()
 
-  interface LoginDTO {
-    usuario: string;
-    senha: string;
+  const handleLogin = async (user: LoginDTO) => {
+    try {
+
+      const { data } = await api.post('/auth', user)
+      localStorage.setItem('token', data)
+      api.defaults.headers.common['Authorization'] = data
+
+      setUserAuthenticated(true)
+      navigate('/pessoa')
+
+    } catch (err) {
+      alert(err)
+    }
   }
-
+  
   return (
     <div className="container">
       <h2>Faça login:</h2>
@@ -25,11 +39,11 @@ export const Login = () => {
             values: LoginDTO,
             { setSubmitting }: FormikHelpers<LoginDTO>
           ) => {
-            setTimeout(() => {
-              console.log(values)
-              handleLogin(values)
-              setSubmitting(false);
-            }, 500);
+
+            console.log(values)
+            handleLogin(values)
+            setSubmitting(false);
+
           }}
         >
           <Form className={styles.loginFields}>

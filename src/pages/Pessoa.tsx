@@ -1,7 +1,9 @@
 export const Pessoa = () => {
+
+
   return (
     <div>
-      Mostra minha pessoa
+      <h1>Pessoa</h1>
     </div>
   );
 }
