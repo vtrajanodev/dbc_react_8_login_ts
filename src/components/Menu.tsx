@@ -1,10 +1,9 @@
 import { useContext } from "react"
 import { Link } from "react-router-dom"
 import { AuthContext } from "../context/AuthContext"
-import api from "../services/api"
 
 export const Menu = () => {
-  const { userAuthenticated, setUserAuthenticated, handleLogout } = useContext(AuthContext)
+  const { userAuthenticated, handleLogout } = useContext(AuthContext)
 
 
 
@@ -20,7 +19,8 @@ export const Menu = () => {
         {userAuthenticated && 
         <li>
           <Link to="/" onClick={handleLogout}>Logout</Link>
-        </li>}
+        </li>
+        }
       </ul>
     </nav>
   )
