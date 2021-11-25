@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import api from "../services/api";
 import styles from '../styles/pessoa.module.scss'
@@ -12,24 +13,13 @@ export const Pessoa = () => {
 
   const [listPeople, setListPeople] = useState<People[]>([])
 
-  const getPeople = async () => {
-    const response = await api.get('/pessoa')
-    const { nome, dataNascimento, cpf, email } = response.data
-    console.log(response.data)
-    setListPeople([
-      ...listPeople,
-      {
-        name: nome,
-        dataNascimento: dataNascimento,
-        cpf: cpf,
-        email: email
-      }
-    ])
-    console.log(listPeople)
-  }
-
+  
   useEffect(() => {
-    getPeople()
+    (async () => {
+      const response = await axios.get('https://my-application-teste.herokuapp.com/pessoa')
+      console.log(response.data)
+      setListPeople(response.data)
+    })()
   }, [])
 
   return (
