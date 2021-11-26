@@ -5,8 +5,6 @@ import { AuthContext } from "../context/AuthContext"
 export const Menu = () => {
   const { userAuthenticated, handleLogout } = useContext(AuthContext)
 
-
-
   return (
     <nav>
       <ul>

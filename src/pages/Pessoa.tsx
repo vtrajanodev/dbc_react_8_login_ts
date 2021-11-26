@@ -1,33 +1,30 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import api from "../services/api";
 import styles from '../styles/pessoa.module.scss'
+import { PessoaDTO } from '../models/PessoaDTO'
 
-interface People {
-  name: string;
-  dataNascimento: string;
-  cpf: string;
-  email: string;
-}
 export const Pessoa = () => {
 
-  const [listPeople, setListPeople] = useState<People[]>([])
+  const [listaPessoa, setListaPessoa] = useState<PessoaDTO[]>([])
 
-  
   useEffect(() => {
     (async () => {
-      const response = await axios.get('https://my-application-teste.herokuapp.com/pessoa')
-      console.log(response.data)
-      setListPeople(response.data)
+      const { data } = await api.get('/pessoa')
+      setListaPessoa(data)
     })()
   }, [])
 
   return (
     <div className={styles.pessoaContainer}>
-      <h1>Pessoa</h1>
-      <div className={styles.pessoasLista}>
-        {listPeople.map((people, index) => (
-          <div key={index}>{people.name}</div>
+      <h1>Dados dos usuários</h1>
+      <div className={styles.pessoaLista}>
+        {listaPessoa.map(pessoa => (
+          <div className={styles.card} key={pessoa.idPessoa}>
+            <h3>{pessoa.nome}</h3>
+            <p>Nascimento: {pessoa.dataNascimento}</p>
+            <p>Email: {pessoa.email}</p>
+            <p>Doc: {pessoa.cpf}</p>
+          </div>
         ))}
       </div>
     </div>
