@@ -53,8 +53,8 @@ export const AuthContextProvider = ({ children }: AuthContextProviderType) => {
   }
 
   const handleLogout = () => {
-
     localStorage.removeItem('token')
+    api.defaults.headers.common['Authorization'] = ''
     navigate('/')
     setUserAuthenticated(false)
   } 
