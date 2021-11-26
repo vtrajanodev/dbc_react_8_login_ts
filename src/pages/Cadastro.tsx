@@ -1,16 +1,18 @@
 import { CadastroDTO } from '../models/CadastroDTO'
-import { Formik, Form, Field, FormikHelpers, } from 'formik'
+import { Formik, Form, Field, FormikHelpers, useFormik } from 'formik'
 import { usePessoa } from '../hooks/usePessoa'
 import styles from '../styles/cadastro.module.scss'
+import { useNavigate } from 'react-router'
 
 export const Cadastro = () => {
 
   const { getList, handleSaveEditChanges, handleRegister, isEditing, userEditing, } = usePessoa()
+  const navigate = useNavigate()
 
   return (
     <>
       <div className={`container`}>
-        
+
         <h1>{isEditing ? ("Edição de usuário") : ("Cadastre um novo usuário")}</h1>
         <Formik
           initialValues={{
@@ -24,10 +26,9 @@ export const Cadastro = () => {
             { setSubmitting }: FormikHelpers<CadastroDTO>
           ) => {
             (!isEditing ?
-            await handleRegister(values)
-            :
-            await handleSaveEditChanges(userEditing.idPessoa, values))
-            console.log(values)
+              await handleRegister(values)
+              :
+              await handleSaveEditChanges(userEditing.idPessoa, values))
             setSubmitting(false);
             await getList()
           }}
@@ -45,12 +46,13 @@ export const Cadastro = () => {
 
               <label htmlFor="email">Email:</label>
               <Field id="email" name="email" placeholder="email@exemplo.com" />
-
-              <button type="submit">{isEditing ? "Atualizar cadastro" : "Cadastrar"}</button>
+              <div className={styles.botoes}>
+                <button type="button" onClick={() => navigate('/pessoa')}>Voltar</button>
+                <button type="submit">{isEditing ? "Atualizar cadastro" : "Cadastrar"}</button>
+              </div>
             </div>
           </Form>
         </Formik>
-
       </div>
     </>
   )

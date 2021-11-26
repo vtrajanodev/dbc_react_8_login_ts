@@ -9,10 +9,9 @@ interface CardProps {
   handleEditUser: (idPessoa: number) => Promise<void>
 }
 
-export const Card = ({ styles, listaPessoa, handleEditUser, handleDeleteUser}: CardProps) => {
+export const Card = ({ styles, listaPessoa, handleEditUser, handleDeleteUser} : CardProps) => {
 
   const { getList } = usePessoa()
-
 
   useEffect(() => {
     getList()
@@ -31,7 +30,7 @@ export const Card = ({ styles, listaPessoa, handleEditUser, handleDeleteUser}: C
               <p>Doc: {pessoa.cpf}</p>
             </div>
             <div className={styles.botoes}>
-              <button onClick={() => handleEditUser(pessoa.idPessoa)}>Acessar informações</button>
+              <button onClick={() => handleEditUser(pessoa.idPessoa)}>Editar</button>
               <button onClick={() => handleDeleteUser(pessoa.idPessoa)}>Deletar</button>
             </div>
           </div>

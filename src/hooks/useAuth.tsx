@@ -34,7 +34,6 @@ export const AuthContextProvider = ({ children }: AuthContextProviderType) => {
 
   const handleLogin = async (user: LoginDTO) => {
     try {
-
       const { data } = await api.post('/auth', user)
       console.log(data)
       localStorage.setItem('token', data)

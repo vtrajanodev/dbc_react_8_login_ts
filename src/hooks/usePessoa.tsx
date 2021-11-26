@@ -43,14 +43,15 @@ export const EditPessoaContextProvider = ({ children }: EditPessoaContextProvide
   const getList = async () => {
     const { data } = await api.get('/pessoa')
     setListaPessoa(data)
+    setIsEditing(false)
   }
 
   const handleEditUser = async (idPessoa: number,) => {
     try {
       setIsEditing(true)
       const pessoa = listaPessoa.find(p => p.idPessoa === idPessoa)
-      console.log(pessoa)
       setUserEditing(pessoa)
+      console.log(pessoa)
       navigate('/')
     } catch (err) {
       alert(err)
@@ -63,11 +64,12 @@ export const EditPessoaContextProvider = ({ children }: EditPessoaContextProvide
       console.log(data)
       alert(`Usuário ${userEditing.nome} editado com sucesso`)
       navigate('/pessoa')
+      setUserEditing('')
     }catch (err) {
 
     }
   }
-
+  
   const handleDeleteUser = async (idPessoa: number) => {
     try {
       await api.delete(`/pessoa/${idPessoa}`)
@@ -79,7 +81,7 @@ export const EditPessoaContextProvider = ({ children }: EditPessoaContextProvide
   }
   
   return (
-    <EditPessoaContext.Provider value={{userEditing, handleSaveEditChanges ,getList, listaPessoa, handleRegister, handleEditUser, handleDeleteUser, isEditing, setIsEditing, }}>
+    <EditPessoaContext.Provider value={{userEditing, handleSaveEditChanges ,getList, listaPessoa, handleRegister, handleEditUser, handleDeleteUser, isEditing, setIsEditing}}>
       {children}
     </EditPessoaContext.Provider>
   );
