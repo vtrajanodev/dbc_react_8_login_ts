@@ -3,10 +3,12 @@ import { PessoaDTO } from '../models/PessoaDTO'
 interface CardProps {
   styles: any
   listaPessoa: PessoaDTO[];
-  handleDeleteUser: (id: number) => Promise<void>
+  handleDeleteUser: (id: number) => Promise<void>;
+  handleEditUser: (id: number) => Promise<void>
+
 }
 
-export const Card = ({ styles, listaPessoa, handleDeleteUser}: CardProps) => {
+export const Card = ({ styles, listaPessoa, handleEditUser, handleDeleteUser}: CardProps) => {
   return (
     <div className={styles.pessoaContainer}>
       <h1>Dados dos usuários</h1>
@@ -20,7 +22,7 @@ export const Card = ({ styles, listaPessoa, handleDeleteUser}: CardProps) => {
               <p>Doc: {pessoa.cpf}</p>
             </div>
             <div className={styles.botoes}>
-              <button>Editar</button>
+              <button onClick={() => handleEditUser(pessoa.idPessoa)}>Editar</button>
               <button onClick={() => handleDeleteUser(pessoa.idPessoa)}>Deletar</button>
             </div>
           </div>

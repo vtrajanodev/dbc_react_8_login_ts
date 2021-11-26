@@ -1,9 +1,8 @@
-import { useContext } from "react"
 import { Link } from "react-router-dom"
-import { AuthContext } from "../context/AuthContext"
+import { useAuth } from "../hooks/useAuth"
 
 export const Menu = () => {
-  const { userAuthenticated, handleLogout } = useContext(AuthContext)
+  const { userAuthenticated, handleLogout } = useAuth();
 
   return (
     <nav>

@@ -1,12 +1,11 @@
 import { Formik, Field, Form, FormikHelpers } from 'formik';
-import { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
 import styles from '../styles/login.module.scss'
 import { LoginDTO } from '../models/LoginDTO';
+import { useAuth } from '../hooks/useAuth';
 
 export const Login = () => {
 
-  const { handleLogin } = useContext(AuthContext)
+  const { handleLogin } = useAuth();
   
   return (
     <div className="container">

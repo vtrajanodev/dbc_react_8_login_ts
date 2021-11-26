@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useEffect, useState } from 'react'
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
 import { LoginDTO } from '../models/LoginDTO'
 import { useNavigate } from 'react-router'
 import api from '../services/api'
@@ -63,4 +63,9 @@ export const AuthContextProvider = ({ children }: AuthContextProviderType) => {
       {children}
     </AuthContext.Provider>
   );
+}
+
+export function useAuth() {
+  const value = useContext(AuthContext)
+  return value;
 }

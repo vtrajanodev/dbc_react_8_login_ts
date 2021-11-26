@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 // import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
-import { AuthContextProvider } from "./context/AuthContext";
-import { EditPessoaContextProvider } from "./hooks/useEditPessoa";
+import { AuthContextProvider } from "./hooks/useAuth"
+import { EditPessoaContextProvider } from "./hooks/usePessoa";
 import { Cadastro } from "./pages/Cadastro";
 import { Login } from "./pages/Login";
 import { Pessoa } from "./pages/Pessoa";
