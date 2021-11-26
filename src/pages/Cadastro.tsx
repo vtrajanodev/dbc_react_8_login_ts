@@ -5,7 +5,7 @@ import styles from '../styles/cadastro.module.scss'
 
 export const Cadastro = () => {
 
-  const { getList, handleRegister, isEditing, userEditing, } = usePessoa()
+  const { getList, handleSaveEditChanges, handleRegister, isEditing, userEditing, } = usePessoa()
 
   return (
     <>
@@ -23,7 +23,10 @@ export const Cadastro = () => {
             values: CadastroDTO,
             { setSubmitting }: FormikHelpers<CadastroDTO>
           ) => {
+            (!isEditing ?
             await handleRegister(values)
+            :
+            await handleSaveEditChanges(userEditing.idPessoa, values))
             console.log(values)
             setSubmitting(false);
             await getList()

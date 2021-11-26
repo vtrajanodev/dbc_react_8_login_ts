@@ -13,11 +13,9 @@ interface EditPessoaContextType {
   handleDeleteUser: (idPessoa: number) => Promise<void>;
   isEditing: boolean;
   setIsEditing: (value: boolean) => void;
-  userEditing: CadastroDTO;
+  userEditing: PessoaDTO;
+  handleSaveEditChanges: (id: number, user: CadastroDTO) => Promise<void>
 }
-
-
-
 
 interface EditPessoaContextProviderProps {
   children: ReactNode;
@@ -54,9 +52,19 @@ export const EditPessoaContextProvider = ({ children }: EditPessoaContextProvide
       console.log(pessoa)
       setUserEditing(pessoa)
       navigate('/')
-      getList()
     } catch (err) {
       alert(err)
+    }
+  }
+
+  const handleSaveEditChanges = async (id: number, user: CadastroDTO) => {
+    try {
+      const { data } = await api.put(`/pessoa/${id}`, user)
+      console.log(data)
+      alert(`Usuário ${userEditing.nome} editado com sucesso`)
+      navigate('/pessoa')
+    }catch (err) {
+
     }
   }
 
@@ -71,7 +79,7 @@ export const EditPessoaContextProvider = ({ children }: EditPessoaContextProvide
   }
   
   return (
-    <EditPessoaContext.Provider value={{userEditing ,getList, listaPessoa, handleRegister, handleEditUser, handleDeleteUser, isEditing, setIsEditing, }}>
+    <EditPessoaContext.Provider value={{userEditing, handleSaveEditChanges ,getList, listaPessoa, handleRegister, handleEditUser, handleDeleteUser, isEditing, setIsEditing, }}>
       {children}
     </EditPessoaContext.Provider>
   );
