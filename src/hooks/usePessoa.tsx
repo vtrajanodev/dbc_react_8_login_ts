@@ -13,7 +13,11 @@ interface EditPessoaContextType {
   handleDeleteUser: (idPessoa: number) => Promise<void>;
   isEditing: boolean;
   setIsEditing: (value: boolean) => void;
+  userEditing: CadastroDTO;
 }
+
+
+
 
 interface EditPessoaContextProviderProps {
   children: ReactNode;
@@ -25,13 +29,8 @@ export const EditPessoaContextProvider = ({ children }: EditPessoaContextProvide
 
   const [listaPessoa, setListaPessoa] = useState<PessoaDTO[]>([])
   const [isEditing, setIsEditing] = useState(false)
-  const [userEditing, setUserEditing] = useState<PessoaDTO>()
+  const [userEditing, setUserEditing] = useState<any>()
   const navigate = useNavigate()
-
-  const getList = async () => {
-    const { data } = await api.get('/pessoa')
-    setListaPessoa(data)
-  }
 
   const handleRegister = async (user: CadastroDTO) => {
     try {
@@ -43,10 +42,16 @@ export const EditPessoaContextProvider = ({ children }: EditPessoaContextProvide
     }
   }
 
+  const getList = async () => {
+    const { data } = await api.get('/pessoa')
+    setListaPessoa(data)
+  }
+
   const handleEditUser = async (idPessoa: number,) => {
     try {
       setIsEditing(true)
       const pessoa = listaPessoa.find(p => p.idPessoa === idPessoa)
+      console.log(pessoa)
       setUserEditing(pessoa)
       navigate('/')
       getList()
@@ -66,7 +71,7 @@ export const EditPessoaContextProvider = ({ children }: EditPessoaContextProvide
   }
   
   return (
-    <EditPessoaContext.Provider value={{getList, listaPessoa, handleRegister, handleEditUser, handleDeleteUser, isEditing, setIsEditing, }}>
+    <EditPessoaContext.Provider value={{userEditing ,getList, listaPessoa, handleRegister, handleEditUser, handleDeleteUser, isEditing, setIsEditing, }}>
       {children}
     </EditPessoaContext.Provider>
   );

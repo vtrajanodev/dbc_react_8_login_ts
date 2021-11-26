@@ -5,19 +5,19 @@ import styles from '../styles/cadastro.module.scss'
 
 export const Cadastro = () => {
 
-  const { getList, handleRegister, isEditing, setIsEditing, } = usePessoa()
+  const { getList, handleRegister, isEditing, userEditing, } = usePessoa()
 
   return (
     <>
       <div className={`container`}>
         
-        <h1>Cadastre um novo usuário</h1>
+        <h1>{isEditing ? ("Edição de usuário") : ("Cadastre um novo usuário")}</h1>
         <Formik
           initialValues={{
-            nome: isEditing ? '' : '',
-            dataNascimento: '',
-            cpf: '',
-            email: ''
+            nome: isEditing ? userEditing.nome : '',
+            dataNascimento: isEditing ? userEditing.dataNascimento : '',
+            cpf: isEditing ? userEditing.cpf : '',
+            email: isEditing ? userEditing.email : ''
           }}
           onSubmit={async (
             values: CadastroDTO,
@@ -43,7 +43,7 @@ export const Cadastro = () => {
               <label htmlFor="email">Email:</label>
               <Field id="email" name="email" placeholder="email@exemplo.com" />
 
-              <button type="submit">Cadastrar</button>
+              <button type="submit">{isEditing ? "Atualizar cadastro" : "Cadastrar"}</button>
             </div>
           </Form>
         </Formik>
