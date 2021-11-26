@@ -9,9 +9,11 @@ interface CardProps {
   handleEditUser: (idPessoa: number) => Promise<void>
 }
 
-export const Card = ({ styles, listaPessoa, handleEditUser, handleDeleteUser }: CardProps) => {
+export const Card = ({ styles, listaPessoa, handleEditUser, handleDeleteUser}: CardProps) => {
 
   const { getList } = usePessoa()
+
+
   useEffect(() => {
     getList()
   }, [])

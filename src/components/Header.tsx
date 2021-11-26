@@ -5,7 +5,6 @@ import styles from '../styles/header.module.scss'
 
 export const Header = () => {
 
- 
   return (
     <header className={styles.headerFlex}>
       <Link to="/login">
