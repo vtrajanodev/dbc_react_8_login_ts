@@ -16,7 +16,7 @@ export const Menu = () => {
         </li>
         {userAuthenticated && 
         <li>
-          <Link to="/" onClick={handleLogout}>Logout</Link>
+          <Link to="/login" onClick={handleLogout}>Logout</Link>
         </li>
         }
       </ul>

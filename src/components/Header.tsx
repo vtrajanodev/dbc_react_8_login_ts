@@ -8,7 +8,7 @@ export const Header = () => {
  
   return (
     <header className={styles.headerFlex}>
-      <Link to="/">
+      <Link to="/login">
         <img src={logo} alt="logo icon" />
       </Link>
       <Menu />

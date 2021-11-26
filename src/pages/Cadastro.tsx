@@ -17,7 +17,6 @@ export const Cadastro = () => {
     } catch (err) {
       alert(err)
     }
-
   }
 
   return (
