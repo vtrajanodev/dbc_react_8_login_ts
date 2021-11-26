@@ -1,14 +1,21 @@
+import { useEffect } from 'react'
+import { usePessoa } from '../hooks/usePessoa'
 import { PessoaDTO } from '../models/PessoaDTO'
 
 interface CardProps {
   styles: any
   listaPessoa: PessoaDTO[];
-  handleDeleteUser: (id: number) => Promise<void>;
-  handleEditUser: (id: number) => Promise<void>
-
+  handleDeleteUser: (idPessoa: number) => Promise<void>;
+  handleEditUser: (idPessoa: number) => Promise<void>
 }
 
-export const Card = ({ styles, listaPessoa, handleEditUser, handleDeleteUser}: CardProps) => {
+export const Card = ({ styles, listaPessoa, handleEditUser, handleDeleteUser }: CardProps) => {
+
+  const { getList } = usePessoa()
+  useEffect(() => {
+    getList()
+  }, [])
+
   return (
     <div className={styles.pessoaContainer}>
       <h1>Dados dos usuários</h1>
@@ -22,7 +29,7 @@ export const Card = ({ styles, listaPessoa, handleEditUser, handleDeleteUser}: C
               <p>Doc: {pessoa.cpf}</p>
             </div>
             <div className={styles.botoes}>
-              <button onClick={() => handleEditUser(pessoa.idPessoa)}>Editar</button>
+              <button onClick={() => handleEditUser(pessoa.idPessoa)}>Acessar informações</button>
               <button onClick={() => handleDeleteUser(pessoa.idPessoa)}>Deletar</button>
             </div>
           </div>

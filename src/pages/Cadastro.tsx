@@ -1,18 +1,19 @@
 import { CadastroDTO } from '../models/CadastroDTO'
 import { Formik, Form, Field, FormikHelpers, } from 'formik'
 import { useNavigate } from 'react-router'
+import { usePessoa } from '../hooks/usePessoa'
 import styles from '../styles/cadastro.module.scss'
 import api from '../services/api'
 
 export const Cadastro = () => {
 
   const navigate = useNavigate()
+  const { getList } = usePessoa()
 
   const handleRegister = async (user: CadastroDTO) => {
     try {
       const  response = await api.post('/pessoa', user)
       alert(`Usuário ${response.data.nome} cadastrado com sucesso`)
-
       navigate('/pessoa')
     } catch (err) {
       alert(err)
@@ -31,13 +32,14 @@ export const Cadastro = () => {
             cpf: '',
             email: ''
           }}
-          onSubmit={(
+          onSubmit={async (
             values: CadastroDTO,
             { setSubmitting }: FormikHelpers<CadastroDTO>
           ) => {
-            handleRegister(values)
+            await handleRegister(values)
             console.log(values)
             setSubmitting(false);
+            await getList()
           }}
         >
           <Form className={styles.cadastroContainer}>

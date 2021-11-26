@@ -5,13 +5,14 @@ import api from "../services/api";
 
 
 interface EditPessoaContextType {
-  handleDeleteUser: (id: number) => Promise<void>
-  handleEditUser: (id: number) => Promise<void>
+  handleDeleteUser: (idPessoa: number) => Promise<void>
+  handleEditUser: (idPessoa: number) => Promise<void>
+  getList: () => Promise<void>
   listaPessoa: PessoaDTO[]
-} 
+}
 
 interface EditPessoaContextProviderProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 export const EditPessoaContext = createContext({} as EditPessoaContextType)
@@ -19,33 +20,41 @@ export const EditPessoaContext = createContext({} as EditPessoaContextType)
 export const EditPessoaContextProvider = ({ children }: EditPessoaContextProviderProps) => {
 
   const [listaPessoa, setListaPessoa] = useState<PessoaDTO[]>([])
+  const navigate = useNavigate()
 
-  const handleDeleteUser = async (id: number) => {
+  // useEffect(() => {
+  //   getList()
+  // }, [])
+
+  const getList = async () => {
+    const { data } = await api.get('/pessoa')
+    setListaPessoa(data)
+  }
+
+  const handleEditUser = async (idPessoa: number,) => {
     try {
-      await api.delete(`/pessoa/${id}`)
+      const pessoa = listaPessoa.find(p => p.idPessoa === idPessoa)
+      console.log(pessoa)
+      navigate('/')
+      getList()
+    } catch (err) {
+      alert(err)
+    }
+
+  }
+
+  const handleDeleteUser = async (idPessoa: number) => {
+    try {
+      await api.delete(`/pessoa/${idPessoa}`)
       alert('Excluido com sucesso')
     } catch (err) {
       alert(err)
     }
   }
-  
-  const handleEditUser = async (id: number, ) => {
-    try {
-      await api.post(`/pessoa/${id}`)
-      alert('Atualizado com sucesso')
-    } catch (err) {
-      alert(err)
-    }
-  }
 
-  useEffect(() => {
-    (async () => {
-      const { data } = await api.get('/pessoa')
-      setListaPessoa(data)
-    })()
-  }, [])
+
   return (
-    <EditPessoaContext.Provider value={{handleDeleteUser, handleEditUser, listaPessoa}}>
+    <EditPessoaContext.Provider value={{ handleDeleteUser, handleEditUser, listaPessoa, getList }}>
       {children}
     </EditPessoaContext.Provider>
   );

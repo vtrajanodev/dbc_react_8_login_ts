@@ -34,12 +34,16 @@
   flex-direction: column;
  
   button {
-    width: 150px;
-    padding: .25rem;
+    width: 120px;
+    padding: 1rem;
     background-color: #cecece;
     border: none;
     border-radius: .25rem;
     cursor: pointer;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    font-weight: bold;
 
     &:hover {
       filter: brightness(0.9);
