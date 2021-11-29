@@ -6,7 +6,6 @@ import { Cadastro } from "./pages/Cadastro"
 import { Login } from "./pages/Login"
 import { Pessoa } from "./pages/Pessoa"
 
-
 export const LinkRoutes = () => {
   const { userAuthenticated } = useAuth()
   return (
