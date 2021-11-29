@@ -30,7 +30,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderType) => {
       setUserAuthenticated(true)
     }
     setLoading(false)
-  }, [userAuthenticated])
+  }, [])
 
   const handleLogin = async (user: LoginDTO) => {
     try {
@@ -53,7 +53,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderType) => {
 
   const handleLogout = () => {
     localStorage.removeItem('token')
-    api.defaults.headers.common['Authorization'] = ''
+    // api.defaults.headers.common['Authorization'] = ''
     navigate('/')
     setUserAuthenticated(false)
   } 

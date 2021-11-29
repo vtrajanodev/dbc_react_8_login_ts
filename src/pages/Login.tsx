@@ -2,10 +2,18 @@ import { Formik, Field, Form, FormikHelpers } from 'formik';
 import styles from '../styles/login.module.scss'
 import { LoginDTO } from '../models/LoginDTO';
 import { useAuth } from '../hooks/useAuth';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
 
 export const Login = () => {
 
-  const { handleLogin } = useAuth();
+  const { handleLogin, userAuthenticated } = useAuth();
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (userAuthenticated) navigate('/pessoa', {replace: true})
+  }, [])
+
   
   return (
     <div className="container">

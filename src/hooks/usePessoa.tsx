@@ -4,7 +4,6 @@ import { PessoaDTO } from "../models/PessoaDTO";
 import { CadastroDTO } from "../models/CadastroDTO";
 import api from "../services/api";
 
-
 interface EditPessoaContextType {
   getList: () => Promise<void>;
   listaPessoa: PessoaDTO[];
@@ -35,6 +34,7 @@ export const EditPessoaContextProvider = ({ children }: EditPessoaContextProvide
       const  response = await api.post('/pessoa', user)
       alert(`Usuário ${response.data.nome} cadastrado com sucesso`)
       navigate('/pessoa')
+      await getList()
     } catch (err) {
       alert(err)
     }
@@ -62,11 +62,11 @@ export const EditPessoaContextProvider = ({ children }: EditPessoaContextProvide
     try {
       const { data } = await api.put(`/pessoa/${id}`, user)
       console.log(data)
-      alert(`Usuário ${userEditing.nome} editado com sucesso`)
       navigate('/pessoa')
+      alert(`Usuário ${userEditing.nome} editado com sucesso`)
       setUserEditing('')
     }catch (err) {
-
+      alert(err)
     }
   }
   
