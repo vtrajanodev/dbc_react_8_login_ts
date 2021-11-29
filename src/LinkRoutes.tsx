@@ -15,7 +15,7 @@ export const LinkRoutes = () => {
         <Routes>
           <Route path="/" element={<Cadastro />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/pessoa" element={<Pessoa />} />
+          <Route path="/pessoa"  element={<Pessoa />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       ) :
