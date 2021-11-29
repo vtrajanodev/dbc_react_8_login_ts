@@ -1,14 +1,22 @@
+import { useEffect } from 'react'
+import { usePessoa } from '../hooks/usePessoa'
 import { PessoaDTO } from '../models/PessoaDTO'
 
 interface CardProps {
   styles: any
   listaPessoa: PessoaDTO[];
-  handleDeleteUser: (id: number) => Promise<void>;
-  handleEditUser: (id: number) => Promise<void>
-
+  handleDeleteUser: (idPessoa: number) => Promise<void>;
+  handleEditUser: (idPessoa: number) => Promise<void>
 }
 
-export const Card = ({ styles, listaPessoa, handleEditUser, handleDeleteUser}: CardProps) => {
+export const Card = ({ styles, listaPessoa, handleEditUser, handleDeleteUser} : CardProps) => {
+
+  const { getList } = usePessoa()
+
+  useEffect(() => {
+    getList()
+  }, [])
+
   return (
     <div className={styles.pessoaContainer}>
       <h1>Dados dos usuários</h1>

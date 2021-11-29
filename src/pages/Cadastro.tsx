@@ -1,43 +1,36 @@
 import { CadastroDTO } from '../models/CadastroDTO'
-import { Formik, Form, Field, FormikHelpers, } from 'formik'
-import { useNavigate } from 'react-router'
+import { Formik, Form, Field, FormikHelpers, useFormik } from 'formik'
+import { usePessoa } from '../hooks/usePessoa'
 import styles from '../styles/cadastro.module.scss'
-import api from '../services/api'
+import { useNavigate } from 'react-router'
 
 export const Cadastro = () => {
 
+  const { getList, handleSaveEditChanges, handleRegister, isEditing, userEditing, } = usePessoa()
   const navigate = useNavigate()
-
-  const handleRegister = async (user: CadastroDTO) => {
-    try {
-      const  response = await api.post('/pessoa', user)
-      alert(`Usuário ${response.data.nome} cadastrado com sucesso`)
-
-      navigate('/pessoa')
-    } catch (err) {
-      alert(err)
-    }
-  }
 
   return (
     <>
       <div className={`container`}>
-        <h1>Cadastre um novo usuário</h1>
 
+        <h1>{isEditing ? ("Edição de usuário") : ("Cadastre um novo usuário")}</h1>
         <Formik
           initialValues={{
-            nome: '',
-            dataNascimento: '',
-            cpf: '',
-            email: ''
+            nome: isEditing ? userEditing.nome : '',
+            dataNascimento: isEditing ? userEditing.dataNascimento : '',
+            cpf: isEditing ? userEditing.cpf : '',
+            email: isEditing ? userEditing.email : ''
           }}
-          onSubmit={(
+          onSubmit={async (
             values: CadastroDTO,
             { setSubmitting }: FormikHelpers<CadastroDTO>
           ) => {
-            handleRegister(values)
-            console.log(values)
+            (!isEditing ?
+              await handleRegister(values)
+              :
+              await handleSaveEditChanges(userEditing.idPessoa, values))
             setSubmitting(false);
+            await getList()
           }}
         >
           <Form className={styles.cadastroContainer}>
@@ -49,16 +42,17 @@ export const Cadastro = () => {
               <Field id="dataNascimento" name="dataNascimento" placeholder="23/12/1969" />
 
               <label htmlFor="cpf">CPF: </label>
-              <Field id="cpf" name="cpf" placeholder="19392848212"/>
+              <Field id="cpf" name="cpf" placeholder="19392848212" />
 
               <label htmlFor="email">Email:</label>
               <Field id="email" name="email" placeholder="email@exemplo.com" />
-
-              <button type="submit">Cadastrar</button>
+              <div className={styles.botoes}>
+                <button type="button" onClick={() => navigate('/pessoa')}>Voltar</button>
+                <button type="submit">{isEditing ? "Atualizar cadastro" : "Cadastrar"}</button>
+              </div>
             </div>
           </Form>
         </Formik>
-
       </div>
     </>
   )

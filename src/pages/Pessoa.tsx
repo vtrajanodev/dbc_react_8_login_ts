@@ -3,9 +3,9 @@ import { Card } from "../components/Card";
 import { usePessoa } from "../hooks/usePessoa";
 
 export const Pessoa = () => {
-  const { listaPessoa, handleEditUser, handleDeleteUser  } = usePessoa()
+  const { listaPessoa, handleEditUser, handleDeleteUser } = usePessoa()
 
   return (
-   <Card styles={styles} listaPessoa={listaPessoa} handleDeleteUser={handleDeleteUser} handleEditUser={handleEditUser}/>
+    <Card styles={styles} listaPessoa={listaPessoa} handleDeleteUser={handleDeleteUser} handleEditUser={handleEditUser} />
   );
 }
