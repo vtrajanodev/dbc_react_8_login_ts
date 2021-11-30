@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
 import { LoginDTO } from '../models/LoginDTO'
 import { useNavigate } from 'react-router'
-import api from '../services/api'
+import { api } from '../services/api'
 
 interface AuthContextInterface {
   userAuthenticated: boolean;

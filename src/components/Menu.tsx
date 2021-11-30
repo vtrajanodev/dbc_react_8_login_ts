@@ -7,17 +7,22 @@ export const Menu = () => {
   return (
     <nav>
       <ul>
-        <li>
-          <Link to="/"> Cadastro</Link>
-        </li>
-        <li>
-          <Link to="/pessoa">Pessoa</Link>
-        </li>
-        {userAuthenticated && 
-        <li>
-          <Link to="/login" onClick={handleLogout}>Logout</Link>
-        </li>
-        }
+        {userAuthenticated && (
+          <>
+            <li>
+              <Link to="/"> Cadastro</Link>
+            </li>
+            <li>
+              <Link to="/pessoa">Pessoa</Link>
+            </li>
+            <li>
+              <Link to="/endereco">Endereço</Link>
+            </li>
+            <li>
+              <Link to="/login" onClick={handleLogout}>Logout</Link>
+            </li>
+          </>
+        )}
       </ul>
     </nav>
   )

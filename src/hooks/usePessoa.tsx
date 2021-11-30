@@ -2,7 +2,7 @@ import { createContext, ReactNode, useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import { PessoaDTO } from "../models/PessoaDTO";
 import { CadastroDTO } from "../models/CadastroDTO";
-import api from "../services/api";
+import { api } from "../services/api";
 
 interface EditPessoaContextType {
   getList: () => Promise<void>;

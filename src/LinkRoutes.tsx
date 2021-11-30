@@ -3,8 +3,10 @@ import { Header } from "./components/Header"
 import { NotFound } from "./components/NotFound"
 import { useAuth } from "./hooks/useAuth"
 import { Cadastro } from "./pages/Cadastro"
+import { Endereco } from "./pages/Endereco"
 import { Login } from "./pages/Login"
 import { Pessoa } from "./pages/Pessoa"
+
 
 export const LinkRoutes = () => {
   const { userAuthenticated } = useAuth()
@@ -15,8 +17,9 @@ export const LinkRoutes = () => {
         <Routes>
           <Route path="/" element={<Cadastro />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/pessoa"  element={<Pessoa />} />
+          <Route path="/pessoa" element={<Pessoa />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/endereco" element={<Endereco />} />
         </Routes>
       ) :
         (
