@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 import { useAuth } from "../hooks/useAuth"
 
 export const Menu = () => {
+
   const { userAuthenticated, handleLogout } = useAuth();
 
   return (

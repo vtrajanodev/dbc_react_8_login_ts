@@ -14,6 +14,8 @@ interface EditPessoaContextType {
   setIsEditing: (value: boolean) => void;
   userEditing: PessoaDTO;
   handleSaveEditChanges: (id: number, user: CadastroDTO) => Promise<void>
+  loading: boolean,
+  setLoading: (value: boolean) => void
 }
 
 interface EditPessoaContextProviderProps {
@@ -22,11 +24,12 @@ interface EditPessoaContextProviderProps {
 
 export const EditPessoaContext = createContext({} as EditPessoaContextType)
 
-export const EditPessoaContextProvider = ({ children }: EditPessoaContextProviderProps) => {
+export const EditPessoaContextProvider = ({ children } : EditPessoaContextProviderProps) => {
 
   const [listaPessoa, setListaPessoa] = useState<PessoaDTO[]>([])
   const [isEditing, setIsEditing] = useState(false)
   const [userEditing, setUserEditing] = useState<any>()
+  const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
 
   const handleRegister = async (user: CadastroDTO) => {
@@ -35,6 +38,7 @@ export const EditPessoaContextProvider = ({ children }: EditPessoaContextProvide
       alert(`Usuário ${response.data.nome} cadastrado com sucesso`)
       navigate('/pessoa')
       await getList()
+      setLoading(false)
     } catch (err) {
       alert(err)
     }
@@ -44,6 +48,7 @@ export const EditPessoaContextProvider = ({ children }: EditPessoaContextProvide
     const { data } = await api.get('/pessoa')
     setListaPessoa(data)
     setIsEditing(false)
+    setLoading(false)
   }
 
   const handleEditUser = async (idPessoa: number,) => {
@@ -51,7 +56,7 @@ export const EditPessoaContextProvider = ({ children }: EditPessoaContextProvide
       setIsEditing(true)
       const pessoa = listaPessoa.find(p => p.idPessoa === idPessoa)
       setUserEditing(pessoa)
-      console.log(pessoa)
+      setLoading(false)
       navigate('/')
     } catch (err) {
       alert(err)
@@ -65,6 +70,7 @@ export const EditPessoaContextProvider = ({ children }: EditPessoaContextProvide
       navigate('/pessoa')
       alert(`Usuário ${userEditing.nome} editado com sucesso`)
       setUserEditing('')
+      setLoading(false)
     }catch (err) {
       alert(err)
     }
@@ -75,13 +81,14 @@ export const EditPessoaContextProvider = ({ children }: EditPessoaContextProvide
       await api.delete(`/pessoa/${idPessoa}`)
       alert('Excluido com sucesso')
       getList()
+      setLoading(false)
     } catch (err) {
       alert(err)
     }
   }
   
   return (
-    <EditPessoaContext.Provider value={{userEditing, handleSaveEditChanges ,getList, listaPessoa, handleRegister, handleEditUser, handleDeleteUser, isEditing, setIsEditing}}>
+    <EditPessoaContext.Provider value={{userEditing, handleSaveEditChanges ,getList, listaPessoa, handleRegister, handleEditUser, handleDeleteUser, isEditing, setIsEditing, loading, setLoading}}>
       {children}
     </EditPessoaContext.Provider>
   );

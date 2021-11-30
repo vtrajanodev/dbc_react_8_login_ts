@@ -19,7 +19,7 @@ export const Endereco = () => {
   const handleBlur = async (cep: string) => {
     const res = await cepApi.get(`/${cep}/json`)
 
-    if (!res.data.erro || res.status !== 200 ) {
+    if (!res.data.erro || res.status !== 200) {
       setEndereco({
         cep: cep,
         logradouro: res.data.logradouro,
@@ -29,7 +29,7 @@ export const Endereco = () => {
         pais: 'Brasil'
       })
 
-    }else {
+    } else {
       alert('Cep inválido')
     }
   }
@@ -56,23 +56,36 @@ export const Endereco = () => {
         {props => (
           <Form className={`${styles.cadastroContainer} mtop`}>
             <div>
-              <label htmlFor="cep">CEP: </label>
-              <Field onBlur={() => handleBlur(props.values.cep)} id="cep" name="cep" placeholder="69048010" />
+              <div>
+                <label htmlFor="cep">CEP: </label>
+                <Field onBlur={() => handleBlur(props.values.cep)} id="cep" name="cep" placeholder="69048010" />
+              </div>
 
-              <label htmlFor="logradouro">Logradouro: </label>
-              <Field id="logradouro" name="logradouro" placeholder="Av. Torquato Tapajos" value={endereco.logradouro}/>
+              <div>
+                <label htmlFor="logradouro">Logradouro: </label>
+                <Field id="logradouro" name="logradouro" placeholder="Av. Torquato Tapajos" value={endereco.logradouro ? endereco.logradouro : null} />
+              </div>
 
-              <label htmlFor="cidade">Cidade</label>
-              <Field id="cidade" name="cidade" placeholder="Manaus" value={endereco.cidade} />
+              <div>
+                <label htmlFor="cidade">Cidade</label>
+                <Field id="cidade" name="cidade" placeholder="Manaus" value={endereco.cidade ? endereco.cidade : null} />
+              </div>
 
-              <label htmlFor="estado">Estado:</label>
-              <Field id="estado" name="estado" placeholder="Amazonas" value={endereco.estado} />
+              <div>
+                <label htmlFor="estado">Estado:</label>
+                <Field id="estado" name="estado" placeholder="Amazonas" value={endereco.estado ? endereco.estado : null} />
+              </div>
 
-              <label htmlFor="complemento">Conplemento:</label>
-              <Field id="complemento" name="complemento" placeholder="Bloco B, apto 401, COND. Amazon Boulevard Life" value={endereco.complemento} />
+              <div>
+                <label htmlFor="complemento">Conplemento:</label>
+                <Field id="complemento" name="complemento" placeholder="Bloco B, apto 401, COND. Amazon Boulevard Life" value={endereco.complemento ? endereco.complemento : null} />
+              </div>
 
-              <label htmlFor="pais">Pais:</label>
-              <Field id="pais" name="pais" placeholder="Brasil" value={endereco.pais} />
+              <div>
+                <label htmlFor="pais">Pais:</label>
+                <Field id="pais" name="pais" placeholder="Brasil" value={endereco.pais} />
+              </div>
+              
               <div className={styles.botoes}>
                 <button type="button">Voltar</button>
                 <button type="submit">Cadastrar endereço</button>

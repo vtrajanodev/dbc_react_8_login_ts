@@ -1,9 +1,9 @@
 import { Formik, Field, Form, FormikHelpers } from 'formik';
-import styles from '../styles/login.module.scss'
 import { LoginDTO } from '../models/LoginDTO';
 import { useAuth } from '../hooks/useAuth';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router';
+import { useMatch, useNavigate, useResolvedPath } from 'react-router';
+import styles from '../styles/login.module.scss'
 
 export const Login = () => {
 
@@ -11,13 +11,12 @@ export const Login = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (userAuthenticated) navigate('/pessoa', {replace: true})
+    if (userAuthenticated) navigate('/pessoa', { replace: true })
   }, [])
 
-  
+
   return (
     <div className="container">
-      <h2>Faça login:</h2>
       <div className={styles.loginAria}>
         <Formik
           initialValues={{
@@ -34,6 +33,8 @@ export const Login = () => {
           }}
         >
           <Form className={styles.loginFields}>
+            <h2>Faça login:</h2>
+
             <label htmlFor="usuario">Usuario</label>
             <Field id="usuario" name="usuario" placeholder="John" />
 
